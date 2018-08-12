@@ -1,0 +1,17 @@
+name: Helper
+main: com.chromaclypse.helper.Helper
+version: ${project.version}
+description: Better help for players
+author: ezeiger92
+depend: [ChromaLib]
+commands:
+    helper:
+        description: Root command
+        usage: /helper [reload]
+    help:
+        description: Displays custom help menu
+        usage: /helper [topic [subtopic [...]]]
+permissions:
+    helper.reload:
+        description: Allows reloading
+        default: op

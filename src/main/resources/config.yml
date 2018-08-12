@@ -1,0 +1,38 @@
+# Helper config
+
+# "Did you mean?" suggestions for unknown commands
+commandSuggestions:
+  maxRange: 6
+  maxResults: 5
+  fixCase: true
+  permFilter: false
+  unlistedCommands:
+    - Not_a_real_command
+    - but_the_server_acts
+    - like_it_is
+
+# Blocks commands and gives a message
+# (Commands don't need to exist on the server)
+disabledCommands:
+  killall: Killall is disabled because you have to kill players by hand!
+
+# Info to build a better /help command
+help:
+  brief: Unused in root topic
+  permission: '*'
+  description: |
+    This is the root help topic
+    Use /help list to see all topics
+  topics:
+  - brief: Topic test 1
+    permission: '*'
+    description: test
+    topics: []
+  - brief: Topic test 2
+    permission: '*'
+    description: test 2
+    topics:
+    - brief: nested topic test
+      permission: '*'
+      description: I really hope this works
+      topics: []
