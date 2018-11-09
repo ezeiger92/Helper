@@ -2,13 +2,23 @@ package com.chromaclypse.helper;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.chromaclypse.helper.guide.Guidebook;
+import com.chromaclypse.helper.guide.Guidebook.SerialSection;
+import com.chromaclypse.helper.guide.Page;
+import com.chromaclypse.helper.guide.PageRedirect;
+import com.chromaclypse.helper.guide.Section;
 
 public class Helper extends JavaPlugin {
 	
 	HelperConfig config = new HelperConfig();
+	Guidebook guide = new Guidebook();
 	CloseCommand closeCommand = new CloseCommand(config);
+	PageRedirect redirect = new PageRedirect();
 	
 
 	@Override
@@ -19,14 +29,27 @@ public class Helper extends JavaPlugin {
 		getCommand("help").setExecutor(this);
 	}
 	
+	@Override
+	public void onDisable() {
+	}
+	
 	public void reload() {
-		HandlerList.unregisterAll(closeCommand);
+		HandlerList.unregisterAll((Plugin) this);
+		
+		redirect.reset();
 		
 		config.init(this);
+		guide.init(this);
+		
+		getServer().getPluginManager().registerEvents(redirect, this);
+		
+		for(SerialSection s : guide.sections) {
+			redirect.registerSection(new Section(s));
+		}
 		
 		if(!config.enabled)
 			return;
-		
+
 		getServer().getPluginManager().registerEvents(closeCommand, this);
 	}
 	
@@ -49,6 +72,14 @@ public class Helper extends JavaPlugin {
 		}
 		else if(args[0].equalsIgnoreCase("search")) {
 			sender.sendMessage("[Helper] Nothing to see here yet");
+			return true;
+		}
+		else if(args[0].equalsIgnoreCase("book")) {
+			Page p = redirect.get("home_0");
+			
+			if(p != null) {
+				p.sendTo((Player) sender);
+			}
 			return true;
 		}
 		

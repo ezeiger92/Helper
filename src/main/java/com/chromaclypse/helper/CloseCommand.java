@@ -85,7 +85,7 @@ public class CloseCommand implements Listener {
 					line.append("&7, &f").append(matches.get(i).getString());
 			}
 			
-			player.sendMessage(Text.colorize(line.toString()));
+			player.sendMessage(Text.format().colorize(line.toString()));
 			e.setCancelled(true);
 		}
 	}

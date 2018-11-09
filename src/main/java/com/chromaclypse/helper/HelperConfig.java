@@ -14,7 +14,7 @@ public class HelperConfig extends ConfigObject {
 		public boolean permFilter = false;
 		public boolean includesAliases = false;
 		public List<String> unlistedCommands = Defaults
-				.List("Not_a_real_command", "but_the_server_acts", "like_I_am");
+				.list("Not_a_real_command", "but_the_server_acts", "like_I_am");
 	}
 	
 	public int resultsPerPage = 5;
@@ -26,6 +26,6 @@ public class HelperConfig extends ConfigObject {
 		public String permission = "*";
 		public String noPermMessage = "Unknown Command";
 		public String description = "Dummy desc";
-		public List<HelpTopic> topics = Defaults.List();
+		public List<HelpTopic> topics = Defaults.emptyList();
 	}
 }
