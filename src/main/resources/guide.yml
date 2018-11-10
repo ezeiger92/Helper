@@ -1,0 +1,14 @@
+# Guide
+#
+# Links with [[category|Hover label]]
+sections:
+- category: index
+  pages:
+  - |
+    - [[Section1|Hover text for section 1]]
+  - |
+    Page 2 of index
+- category: section1
+  pages:
+  - |
+    I am section 1

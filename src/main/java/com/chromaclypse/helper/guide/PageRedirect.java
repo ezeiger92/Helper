@@ -2,38 +2,50 @@ package com.chromaclypse.helper.guide;
 
 import java.util.HashMap;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class PageRedirect implements Listener {
+import com.chromaclypse.api.messages.Text;
+
+public class PageRedirect implements CommandExecutor {
 	
-	private HashMap<String, Book> sections = new HashMap<>();
+	private HashMap<String, Section> sections = new HashMap<>();
 	
 	public void registerSection(Section a) {
 		sections.put(a.getSection(), a);
-	}
-	
-	public Book get(String ident) {
-		return sections.get(ident);
 	}
 	
 	public void reset() {
 		sections.clear();
 	}
 
-	@EventHandler
-	public void onCommand(PlayerCommandPreprocessEvent event) {
-		String[] parts = event.getMessage().split(" ", 2);
-		
-		if(parts.length > 1 && parts[0].toLowerCase().equals("/helper-guide-page")) {
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		if(sender instanceof Player) {
+			String topic;
 			
-			Book p = sections.get(parts[1].toLowerCase());
+			if(args.length > 0) {
+				topic = String.join(" ", args).toLowerCase();
+			}
+			else {
+				topic = "index";
+			}
+			
+			Section p = sections.get(topic);
 			
 			if(p != null) {
-				p.sendTo(event.getPlayer());
-				event.setCancelled(true);
+				p.sendTo((Player) sender);
+			}
+			else {
+				sender.sendMessage(Text.format().colorize("&cNo guide found!"));
 			}
 		}
+		else {
+			sender.sendMessage(Text.format().colorize("&cThis command only works for players"));
+		}
+		
+		return true;
 	}
 }

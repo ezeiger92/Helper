@@ -2,12 +2,10 @@ package com.chromaclypse.helper;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.chromaclypse.helper.guide.Book;
 import com.chromaclypse.helper.guide.Guidebook;
 import com.chromaclypse.helper.guide.Guidebook.SerialSection;
 import com.chromaclypse.helper.guide.PageRedirect;
@@ -26,7 +24,7 @@ public class Helper extends JavaPlugin {
 		reload();
 		
 		getCommand("helper").setExecutor(this);
-		getCommand("help").setExecutor(this);
+		getCommand("guide").setExecutor(redirect);
 	}
 	
 	@Override
@@ -40,8 +38,6 @@ public class Helper extends JavaPlugin {
 		
 		config.init(this);
 		guide.init(this);
-		
-		getServer().getPluginManager().registerEvents(redirect, this);
 		
 		for(SerialSection s : guide.sections) {
 			redirect.registerSection(new Section(s));
@@ -72,14 +68,6 @@ public class Helper extends JavaPlugin {
 		}
 		else if(args[0].equalsIgnoreCase("search")) {
 			sender.sendMessage("[Helper] Nothing to see here yet");
-			return true;
-		}
-		else if(args[0].equalsIgnoreCase("book")) {
-			Book p = redirect.get("home");
-			
-			if(p != null) {
-				p.sendTo((Player) sender);
-			}
 			return true;
 		}
 		

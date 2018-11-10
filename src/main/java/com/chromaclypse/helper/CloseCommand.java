@@ -77,11 +77,11 @@ public class CloseCommand implements Listener {
 		
 		else {
 			int len = Math.min(matches.size(), config.suggest.maxResults);
-			StringBuilder line = new StringBuilder("&cUnknown command \"" + command + "\".");
+			StringBuilder line = new StringBuilder("&cUnknown command \"" + command + "\". ");
 			
 			if(len > 0) {
 				line.append("&7Did you mean: &f").append(matches.get(0).getString());
-				for(int i = 0; i < len; ++i)
+				for(int i = 1; i < len; ++i)
 					line.append("&7, &f").append(matches.get(i).getString());
 			}
 			
