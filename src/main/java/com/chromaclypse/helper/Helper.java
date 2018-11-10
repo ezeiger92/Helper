@@ -7,9 +7,9 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.chromaclypse.helper.guide.Book;
 import com.chromaclypse.helper.guide.Guidebook;
 import com.chromaclypse.helper.guide.Guidebook.SerialSection;
-import com.chromaclypse.helper.guide.Page;
 import com.chromaclypse.helper.guide.PageRedirect;
 import com.chromaclypse.helper.guide.Section;
 
@@ -75,7 +75,7 @@ public class Helper extends JavaPlugin {
 			return true;
 		}
 		else if(args[0].equalsIgnoreCase("book")) {
-			Page p = redirect.get("home_0");
+			Book p = redirect.get("home");
 			
 			if(p != null) {
 				p.sendTo((Player) sender);

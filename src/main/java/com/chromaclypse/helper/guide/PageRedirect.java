@@ -8,21 +8,18 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class PageRedirect implements Listener {
 	
-	private HashMap<String, Page> pages = new HashMap<>();
+	private HashMap<String, Book> sections = new HashMap<>();
 	
 	public void registerSection(Section a) {
-		
-		for(Page p : a.getPages()) {
-			pages.put(p.toString().toLowerCase(), p);
-		}
+		sections.put(a.getSection(), a);
 	}
 	
-	public Page get(String ident) {
-		return pages.get(ident);
+	public Book get(String ident) {
+		return sections.get(ident);
 	}
 	
 	public void reset() {
-		pages.clear();
+		sections.clear();
 	}
 
 	@EventHandler
@@ -31,7 +28,7 @@ public class PageRedirect implements Listener {
 		
 		if(parts.length > 1 && parts[0].toLowerCase().equals("/helper-guide-page")) {
 			
-			Page p = pages.get(parts[1].toLowerCase());
+			Book p = sections.get(parts[1].toLowerCase());
 			
 			if(p != null) {
 				p.sendTo(event.getPlayer());
