@@ -14,9 +14,11 @@ public class Section {
 	private JsonBlob page;
 	private JsonBlob[] extra;
 	private String section;
+	private String baseCommand;
 	
-	public Section(SerialSection parts) {
+	public Section(SerialSection parts, String baseCommand) {
 		section = parts.category;
+		this.baseCommand = baseCommand;
 		
 		int length = parts.pages.size() - 1;
 		
@@ -38,7 +40,7 @@ public class Section {
 		
 		String json = data.toString().replaceAll(
 				"\\[\\[([^|]+)\\|([^]]+)\\]\\]", "\"},{\"text\":\"$1\",\"clickEvent\":{"
-				+ "\"action\":\"run_command\",\"value\":\"/helper:guide $1\""
+				+ "\"action\":\"run_command\",\"value\":\"/" + baseCommand + " $1\""
 				+ "},\"hoverEvent\":{"
 				+ "\"action\":\"show_text\",\"value\":\"$2\""
 				+ "},\"color\":\"dark_aqua\"},{\"text\":\"");
@@ -61,7 +63,7 @@ public class Section {
 		JsonBlob result = new JsonBlob().add("").add("   " + Text.format().niceName(section) + "\n", Prop.DARK_BLUE);
 		
 		if(!section.equals("index")) {
-			result.add("<--", Prop.CLICK_RUN("/helper:guide"), Prop.HOVER_TEXT("Back to index"), Prop.BOLD);
+			result.add("<--", Prop.CLICK_RUN("/" + baseCommand), Prop.HOVER_TEXT("Back to index"), Prop.BOLD);
 		}
 		
 		return result.add("\n").add(blob);

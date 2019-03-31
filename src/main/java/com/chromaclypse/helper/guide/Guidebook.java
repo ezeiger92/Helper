@@ -1,6 +1,7 @@
 package com.chromaclypse.helper.guide;
 
 import java.util.List;
+import java.util.Map;
 
 import com.chromaclypse.api.Defaults;
 import com.chromaclypse.api.config.ConfigObject;
@@ -14,4 +15,6 @@ public class Guidebook extends ConfigObject {
 		public String category = "category";
 		public List<String> pages = Defaults.emptyList();
 	}
+	
+	public Map<String, String> aliases = Defaults.emptyMap();
 }

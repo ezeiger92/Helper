@@ -1,13 +1,13 @@
-name: Helper
+name: Assistant
 main: com.chromaclypse.helper.Helper
 version: ${project.version}
 description: Better help for players
 author: ezeiger92
 depend: [ChromaLib]
 commands:
-    helper:
+    assistant:
         description: Root command
-        usage: /helper [reload]
+        usage: /assistant [reload]
     guide:
         description: Guide book
         usage: /guide

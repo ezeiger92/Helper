@@ -23,7 +23,7 @@ public class Helper extends JavaPlugin {
 	public void onEnable() {
 		reload();
 		
-		getCommand("helper").setExecutor(this);
+		getCommand("assistant").setExecutor(this);
 		getCommand("guide").setExecutor(redirect);
 	}
 	
@@ -34,14 +34,18 @@ public class Helper extends JavaPlugin {
 	public void reload() {
 		HandlerList.unregisterAll((Plugin) this);
 		
+		String baseCommand = getDescription().getName() + ":guide";
+		
 		redirect.reset();
 		
 		config.init(this);
 		guide.init(this);
 		
 		for(SerialSection s : guide.sections) {
-			redirect.registerSection(new Section(s));
+			redirect.registerSection(new Section(s, baseCommand));
 		}
+		
+		redirect.setAliases(guide.aliases);
 		
 		if(!config.enabled)
 			return;
@@ -52,8 +56,8 @@ public class Helper extends JavaPlugin {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(args.length == 0) {
-			sender.sendMessage("[Helper] Version " + getDescription().getVersion());
-			sender.sendMessage("[Helper] /helper reload to reload");
+			sender.sendMessage("[Assistant] Version " + getDescription().getVersion());
+			sender.sendMessage("[Assistant] /helper reload to reload");
 			return true;
 		}
 		else if(args[0].equalsIgnoreCase("reload")) {
@@ -62,16 +66,16 @@ public class Helper extends JavaPlugin {
 			if(!hasPermission)
 				return false;
 			
-			sender.sendMessage("[Helper] Reloading config");
+			sender.sendMessage("[Assistant] Reloading config");
 			reload();
 			return true;
 		}
 		else if(args[0].equalsIgnoreCase("search")) {
-			sender.sendMessage("[Helper] Nothing to see here yet");
+			sender.sendMessage("[Assistant] Nothing to see here yet");
 			return true;
 		}
 		
-		sender.sendMessage("[Helper] Unknown arg \"" + args[0] + "\"");
+		sender.sendMessage("[Assistant] Unknown arg \"" + args[0] + "\"");
 		return true;
 	}
 }
